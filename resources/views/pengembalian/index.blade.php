@@ -5,11 +5,6 @@
 		<div class="col-md-12"><br>
 			<div class="card card-success">
 			  <div class="card-header">Data Pengembalian
-			  	<div class="card-title pull-right">
-			  		@role('admin')
-			  		 <a class="btn btn-outline-warning" href="{{ url('/admin/export/pengembalian') }}">Export</a>
-			  		 	@endrole
-			  	</div>
 			  </div>
 			  <div class="panel-body">
 			  	<div class="table-responsive">
@@ -17,11 +12,13 @@
 						  	<thead>
 			  		<tr>
 			  		  	<th>No</th>
-					  	<th>Nama Member</th>
-						<th>Nama Barang</th>
+					  	<th>Nama Peminjam</th>
+						<th>Barang Yang Di Pinjam</th>
 					  	<th>Jumlah Pinjam</th>
 						<th>Tanggal Peminjaman</th>
+						<th>Tanggal Batas Peminjaman</th>
 						<th>Tanggal Pengembalian</th>
+						<th>Denda</th>
 
 					 
 			  		</tr>
@@ -36,8 +33,9 @@
 							<td>{{ $data->barang->nama }}</td>
 				    		<td>{{ $data->jumlah }}</td>
 							<td>{{ $data->tgl_pinjam }}</td>
-							<td>{{ $data->created_at }}</td>
-
+							<td>{{ $data->tanggal_batas }}</td>
+              <td>{{ $data->tanggal_kembali }}</td>
+              <td>Rp. {{number_format($data->denda) }}</td>
 				      </tr>
 				      @endforeach	
 				  	</tbody>
@@ -49,3 +47,8 @@
 	</div>
 </div>
 @endsection
+<script>
+  $(document).ready( function () {
+    $('#myTable').DataTable();
+  } );
+</script>

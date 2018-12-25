@@ -5,10 +5,8 @@
 		<div class="col-md-12"><br>
 			<div class="card card-success">
 			  <div class="card-header">Peminjaman
-			  	<div class="card-title pull-right">
-			  		@role('admin')
+			  	<div class="btn btn-outline-primary pull-right">
 			  		<a href="{{ route('peminjaman.create') }}">Tambah Data</a>
-			  		@endrole
 			  	</div>
 			  </div>
 			  <div class="card-body">
@@ -19,10 +17,11 @@
 			  		  <th>No</th>
 					  <th>Nama peminjam</th>
 					  <th>Nama Barang</th>
-					  <th>Tanggal Pinjam</th>
 					  <th>Jumlah Barang Yang Dipinjam</th>
+					  <th>Tanggal Pinjam</th>
+					  <th>Tanggal Batas Pinjam</th>
 					  <th colspan="3">Action</th>
-			  		</tr>
+			  		</tr>	
 				  	</thead>
 				  	<tbody>
 				  		@php $no = 1; @endphp
@@ -31,8 +30,9 @@
 				    	<td>{{ $no++ }}</td>
 				    	<td>{{ $data->anggota->nama }}</td>
 				    	<td>{{ $data->barang->nama }}</td>
-				    	<td>{{ $data->created_at}}</td>
 				    	<td><center>{{ $data->jumlah }}</center></td>
+						<td>{{ $data->created_at }}</td>
+						<td>{{ $data->tanggal_batas }}</td>
 				    	
 				    	@role('admin')
 						<!-- <td>

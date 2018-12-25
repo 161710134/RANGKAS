@@ -24,63 +24,40 @@
 <style type="text/css"></style>
 @endpush
 @section('title')
-Dokumentasi Anggota
+Dokumentasi Peminjaman
 @endsection
 @section('content')
 <div class="row">
   <div class="col-12">
     <div class="card">
       <h2 class="card-header">
-        Laporan Anggota
+        Laporan Peminjaman
         <div class="float-right">
-          <a class="btn btn-xs btn-outline-dark badge-pill" href="{{URL::previous()}}"><i class="zmdi zmdi-close-circle"></i> Batal</a>
         </div>
       </h2>
       <div class="card-body">
-        <form action="{{ url('admin/laporan/anggota/detail1') }}" method="post">
+        <form action="{{ url('admin/laporan/peminjaman/detail') }}" method="post">
           {{csrf_field()}}
           <div class="form-group">
             <label class="control-label"><font style="color:grey"> Dari Tanggal </label> 
-            <input type="date" class="date" name="dari" value="{{$dari}}" readonly="">
+            <input type="date" class="date" name="dari" required="">
             <label class="control-label"><font style="color:grey"> Sampai Tanggal </label> 
-            <input type="date" class="date" name="sampai" value="{{$sampai}}" readonly="">&nbsp;
-            <button type="submit" name="submit" class="btn btn-xs btn-outline-danger badge-pill" value="PDF"><i class="zmdi zmdi-square-down"></i> PDF</button>
+            <input type="date" class="date" name="sampai" required="">&nbsp;
+            <button type="submit" class="btn btn-outline-secondary btn-xs badge-pill"><i class="zmdi zmdi-check-circle"></i> Buka</button>
           </div>
         </form>
-        <center>
-          <h1>Data Anggota</h1>
-          <br>
-          <h4>Dari Tanggal {{$dari}} Sampai Tanggal {{$sampai}}</h4>
-        </center>
         <table id="myTable" class="table table-bordered table-hover">
           <thead class="thead-default" style="background-color:#2196F3">
             <tr>
               <th><font face color="white">No</th>
-              <th><font face color="white">Nama Anggota</th>
-              <th><font face color="white">Jenis Kelamin</th>
-              <th><font face color="white">No HP</th>
-              <th><font face color="white">Alamat</th>
-              <th><font face color="white">Menjadi Anggota Sejak</th>
-              <th><font face color="white">Anggota Di Ubah Pada</th>
+              <th><font face color="white">Nama Peminjam</th>
+              <th><font face color="white">Barang Yang Di Pinjam</th>
+              <th><font face color="white">Jumlah Barang Yang Di Pinjam</th>
+              <th><font face color="white">Tanggal Peminjaman</th>
+              <th><font face color="white">Tanggal Batas Peminjaman</th>
             </tr>
           </thead>
-          <tbody>
-            <?php $nomor = 1; ?>
-            @php $no = 1; @endphp
-            @foreach($anggota as $data)
-            <tr>
-              <td>{{ $no++ }}</td>
-              <td>{{ $data->nama }}</td>
-              <td>{{ $data->jk }}</td>
-              <td>{{ $data->nope }}</td>
-              <td>{{ $data->alamat }}</td>
-              <td>{{ $data->created_at }}</td>
-              <td>{{ $data->updated_at }}</td>
-            </tr>
-            @endforeach 
-          </tbody>
         </table>
-        Laporan Anggota Di Ambil Dari Tanggal : {{$dari}} Sampai Tanggal : {{$sampai}}
       </div>
     </div>
   </div>
@@ -105,4 +82,4 @@ Dokumentasi Anggota
     $('#myTable').DataTable();
   } );
 </script>
-@endpush 
+@endpush

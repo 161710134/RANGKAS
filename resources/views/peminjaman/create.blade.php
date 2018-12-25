@@ -16,6 +16,7 @@
               <th style="background: green">Nama Anggota</th>
               <th style="background: green">Nama Barang</th>
               <th style="background: green">Jumlah Pinjam</th>
+							<th style="background: green">Batas Waktu Peminjaman</th>
               <th><button type="button" name="add" class="btn btn-success btn-sm add" onclick="addrow()"><i class="fa fa-plus-square"></button></th>
             </tr>
           </table>			  		
@@ -37,9 +38,14 @@ function addrow(){
       html +='<td><select name="id_anggota[]" class="form-control">@foreach($anggota as $data)<option value="{{$data->id}}">{{$data->nama}}</option>@endforeach</select></td>';
 	  html +='<td><select name="id_barang[]" class="form-control">@foreach($barangs as $data)<option value="{{$data->id}}">{{$data->nama}}</option>@endforeach</select></td>';
       html +='<td><input type="text" name="jumlah[]" class="form-control jumlah"/></td>';
+			html +='<td><input type="date" name="tanggal_batas[]" class="form-control date"/></td>';
 	  html +='<td><button type="button" class="btn btn-danger btn-sm" onclick="remove('+ no +')"><i class="fa fa-minus-square"></i></button></td></tr>';
       $('#last').after(html);
-      
+      $('.sl2').select2();
+      $('.date').flatpickr({
+        nextArrow: '<i class="zmdi zmdi-long-arrow-right" />',
+        prevArrow: '<i class="zmdi zmdi-long-arrow-left" />'
+      });
     }
     function remove(no){
       $('#row_'+no).remove();

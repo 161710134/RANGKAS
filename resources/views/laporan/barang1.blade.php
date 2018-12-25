@@ -24,20 +24,20 @@
 <style type="text/css"></style>
 @endpush
 @section('title')
-Dokumentasi Anggota
+Dokumentasi Barang
 @endsection
 @section('content')
 <div class="row">
   <div class="col-12">
     <div class="card">
       <h2 class="card-header">
-        Laporan Anggota
+        Laporan Barang
         <div class="float-right">
           <a class="btn btn-xs btn-outline-dark badge-pill" href="{{URL::previous()}}"><i class="zmdi zmdi-close-circle"></i> Batal</a>
         </div>
       </h2>
       <div class="card-body">
-        <form action="{{ url('admin/laporan/anggota/detail1') }}" method="post">
+        <form action="{{ url('admin/laporan/barang/detail1') }}" method="post">
           {{csrf_field()}}
           <div class="form-group">
             <label class="control-label"><font style="color:grey"> Dari Tanggal </label> 
@@ -48,7 +48,7 @@ Dokumentasi Anggota
           </div>
         </form>
         <center>
-          <h1>Data Anggota</h1>
+          <h1>Data Barang</h1>
           <br>
           <h4>Dari Tanggal {{$dari}} Sampai Tanggal {{$sampai}}</h4>
         </center>
@@ -56,31 +56,25 @@ Dokumentasi Anggota
           <thead class="thead-default" style="background-color:#2196F3">
             <tr>
               <th><font face color="white">No</th>
-              <th><font face color="white">Nama Anggota</th>
-              <th><font face color="white">Jenis Kelamin</th>
-              <th><font face color="white">No HP</th>
-              <th><font face color="white">Alamat</th>
-              <th><font face color="white">Menjadi Anggota Sejak</th>
-              <th><font face color="white">Anggota Di Ubah Pada</th>
+              <th><font face color="white">Nama Barang</th>
+              <th><font face color="white">Stok Barang</th>
+              <th><font face color="white">Keadaan Barang</th>
             </tr>
           </thead>
           <tbody>
             <?php $nomor = 1; ?>
             @php $no = 1; @endphp
-            @foreach($anggota as $data)
+            @foreach($barang as $data)
             <tr>
               <td>{{ $no++ }}</td>
               <td>{{ $data->nama }}</td>
-              <td>{{ $data->jk }}</td>
-              <td>{{ $data->nope }}</td>
-              <td>{{ $data->alamat }}</td>
-              <td>{{ $data->created_at }}</td>
-              <td>{{ $data->updated_at }}</td>
+              <td>{{ $data->stok }}</td>
+              <td>{{ $data->keadaan }}</td>
             </tr>
             @endforeach 
           </tbody>
         </table>
-        Laporan Anggota Di Ambil Dari Tanggal : {{$dari}} Sampai Tanggal : {{$sampai}}
+        Laporan Barang Di Ambil Dari Tanggal : {{$dari}} Sampai Tanggal : {{$sampai}}
       </div>
     </div>
   </div>

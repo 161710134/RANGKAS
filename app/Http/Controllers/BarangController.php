@@ -162,49 +162,4 @@ class BarangController extends Controller
         $barangs->delete();
         return redirect()->route('barang.index');
     }
-    public function export()
-    {
-        return view('barang.export');
-    }
-
-    public function exportPost(Request $request)
-    {
-        // validasi
-$this->validate($request, [
-    'nama'=>'required',
-    ], [
-    'nama.required'=>'Anda belum memilih barang. Pilih minimal 1 barang.'
-    ]);
-    $barangs = barang::whereIn('id', $request->get('nama'))->get();
-
-    $handler = 'export' . ucfirst($request->get('type'));
-    return $this->$handler($barangs);
-    }
-
-    private function exportXls($barangs)
-    {
-    Excel::create('Data Barang Perkakas', function($excel) use ($barangs) {
-    // Set property
-    $excel->sheet('Data Barang', function($sheet) use ($barangs) {
-        $row = 1;
-        $sheet->row($row, [
-            'nama',
-            'stok',
-            'keadaan'
-        ]);
-    foreach ($barangs as $barang) {
-    $sheet->row(++$row, [
-    $barang->nama,
-    $barang->stok,
-    $barang->keadaan
-    ]);
-    }
-    });
-    })->export('xls');
-    }
-    private function exportPdf($barangs)
-    {
-    $pdf = PDF::loadview('pdf.barangs', compact('barangs'));
-    return $pdf->download('barangs.pdf');
-    }
 }

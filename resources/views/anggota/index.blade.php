@@ -5,7 +5,7 @@
 		<div class="col-md-12"><br>
 			<div class="card card-success">
 			  <div class="card-header">Data Anggota
-			  	<div class="card-title pull-right"><a href="{{ route('anggota.create') }}">Tambah Data</a>
+			  	<div class="btn btn-outline-primary pull-right"><a href="{{ route('anggota.create') }}">Tambah Data</a>
 			  	</div>
 					</div>
 			  </div>

@@ -20,6 +20,7 @@ class CreatePeminjamansTable extends Migration
             $table->unsignedinteger('id_barang');
             $table->foreign('id_barang')->references('id')->on('barangs')->onDelete('CASCADE');
             $table->integer('jumlah');
+            $table->datetime('tanggal_batas');
             $table->timestamps();
         });
     }

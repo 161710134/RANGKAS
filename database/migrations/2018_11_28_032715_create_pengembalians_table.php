@@ -21,6 +21,9 @@ class CreatePengembaliansTable extends Migration
             $table->foreign('id_barang')->references('id')->on('barangs')->OnDelete('CASCADE');
             $table->integer('jumlah');
             $table->datetime('tgl_pinjam');
+            $table->datetime('tanggal_batas');
+            $table->datetime('tanggal_kembali');
+            $table->string('denda');
             $table->timestamps();
         });
     }

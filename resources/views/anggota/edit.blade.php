@@ -5,7 +5,7 @@
 		<div class="col-md-12"><br>
 			<div class="card card-success">
 			  <div class="card-header">Edit Data Anggota
-			  	<div class="card-title pull-right"><a href="{{ url()->previous() }}">Kembali</a>
+			  	<div class="btn btn-outline-primary pull-right"><a href="{{ url()->previous() }}">Kembali</a>
 			  	</div>
 			  </div>
 			  <div class="panel-body">

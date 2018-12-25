@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class peminjaman extends Model
 {
     protected $table = 'peminjamans';
-    protected $fillable = ['id_anggota','id_barang','jumlah'];
+    protected $fillable = ['id_anggota','id_barang','jumlah' ,'tanggal_batas'];
     public $timestamps = true;
     
     public function barang(){

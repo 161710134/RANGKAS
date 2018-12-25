@@ -2,7 +2,7 @@
   <a href="index3.html" class="brand-link">
       <img src="{{ asset('icon.png')}}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3"
            style="opacity: .8">
-      <span class="brand-text font-weight-light"><font color = "green">SiPeRangKas</font></span>
+      <span class="brand-text font-weight-light"><font color = "green">SiMiRangKas</font></span>
     </a>
 
   <div class="sidebar" data-color="purple" data-image="{{ asset('sidebar-5.jpg')}}">
@@ -48,46 +48,71 @@
               </p>
             </a>
             <ul class="nav nav-treeview">
-              @role('member')
                <li class="nav-item">
-                <a href="daftar" class="nav-link">
-                  <i class="fa fa-pie-chart"></i>
-                  <p>Lihat Barang Pinjaman</p>
-                </a>
-              </li>
-              @endrole
-              <li class="nav-item">
                 <a href="{{route('barang.index')}}" class="nav-link">
-                  <i class="fa fa-pie-chart"></i>
+                  <i class="fa fa-briefcase"></i>
                   <p>Barang</p>
                 </a>
               </li>
+
               <li class="nav-item">
-                <a href="{{ route('peminjaman.index') }}" class="nav-link">
-                  <i class="fa fa-pie-chart"></i>
-                  <p>Peminjam</p>
-                </a>
-             </li>
-             @role('admin')
-                <li class="nav-item">
                 <a href="{{ route('anggota.index') }}" class="nav-link">
-                  <i class="fa fa-pie-chart"></i>
+                  <i class="fa fa-users"></i>
                   <p>Anggota</p>
                 </a>
              </li>
-               @endrole
-                @role('admin')
+
+              <li class="nav-item">
+                <a href="{{ route('peminjaman.index') }}" class="nav-link">
+                  <i class="fa fa-building sub-icon-mg"></i>
+                  <p>Peminjam</p>
+                </a>
+             </li>
+             
               <li class="nav-item">
                 <a href="{{ route('pengembalian.index') }}" class="nav-link">
-                  <i class="fa fa-pie-chart"></i>
+                  <i class="fa fa-folder"></i>
                   <p>Pengembalian</p>
                 </a>
              </li>
-              @endrole
+             
             </ul>
           </li>
-         
-
+          <li class="nav-item has-treeview">
+          <a href="#" class="nav-link">
+            <i class="nav-icon fa fa-book"></i>
+            <p>
+              Laporan
+              <i class="fa fa-angle-left right"></i>
+            </p>
+          </a>
+          <ul class="nav nav-treeview">
+               <li class="nav-item">
+                <a href="{{url('admin/laporan/anggota')}}" class="nav-link">
+                  <i class="fa fa-female sub-icon-mg"></i>
+                  <p>Data Anggota</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="{{url('admin/laporan/barang')}}" class="nav-link">
+                  <i class="fa fa-briefcase"></i>
+                  <p>Data Barang</p>
+                </a>
+             </li>
+             
+              <li class="nav-item">
+                <a href="{{ url('admin/laporan/peminjaman') }}" class="nav-link">
+                  <i class="fa fa-building sub-icon-mg"></i>
+                  <p>Data Peminjam</p>
+                </a>
+             </li>
+             
+              <li class="nav-item">
+                <a href="{{ url('admin/laporan/pengembalian') }}" class="nav-link">
+                  <i class="fa fa-folder"></i>
+                  <p>Data Pengembalian</p>
+                </a>
+             </li>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

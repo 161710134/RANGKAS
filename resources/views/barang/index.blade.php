@@ -6,10 +6,7 @@
 			<div class="card card-success">
 			  <div class="card-header">Barang
 			  	<div class="card-title pull-right">
-			  		@role('admin')
 			  		<a class="btn btn-outline-primary" href="{{ route('barang.create') }}" >Tambah Data</a>
-			  		 <a class="btn btn-outline-warning" href="{{ url('/admin/export/barang') }}">Export</a>
-			  		@endrole
 			  	</div>
 			  </div>
 			  <div class="card-body">

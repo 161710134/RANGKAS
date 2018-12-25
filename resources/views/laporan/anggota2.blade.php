@@ -21,7 +21,7 @@
     <tr>
       <td>{{ $no++ }}</td>
       <td>{{ $data->nama }}</td>
-      <td>{{ $data->jurusan }}</td>
+      <td>{{ $data->jk }}</td>
       <td>{{ $data->nope }}</td>
       <td>{{ $data->alamat }}</td>
       <td>{{ $data->created_at }}</td>

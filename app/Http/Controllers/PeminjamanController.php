@@ -7,7 +7,9 @@ use App\Anggota;
 use App\barang;
 use App\peminjaman;
 use App\pengembalian;
-use Session;
+use DateTime;
+use App\Traits\SessionFlash;
+use Input;
 
 class PeminjamanController extends Controller
 {
@@ -43,21 +45,52 @@ class PeminjamanController extends Controller
      */
     public function store(Request $request)
     {
-        for($id = 0; $id < count($request->id_anggota); $id++){
-            $peminjamans = new peminjaman;
-            $peminjamans->id_anggota = $request->id_anggota[$id];
-            $peminjamans->id_barang = $request->id_barang[$id];
-            $peminjamans->jumlah = $request->jumlah[$id];
+        //for($id = 0; $id < count($request->id_anggota); $id++){
+          //  $peminjamans = new peminjaman;
+            //$peminjamans->id_anggota = $request->id_anggota[$id];
+            //$peminjamans->id_barang = $request->id_barang[$id];
+            //$peminjamans->jumlah = $request->jumlah[$id];
         
-            $barangs = barang::findOrFail($request->id_barang[$id]);
-            $barangs->stok = $barangs->stok - $request->jumlah[$id]; 
-            $barangs->save();
-            $peminjamans->save();
-            }
-            Session::flash("flash_notification", [
-                "level"=>"success",
-                "message"=>"Berhasil menyimpan data peminjaman"
-                ]);
+            //$barangs = barang::findOrFail($request->id_barang[$id]);
+            //$barangs->stok = $barangs->stok - $request->jumlah[$id]; 
+            //$barangs->save();
+            //$peminjamans->save();
+            //}
+            //Session::flash("flash_notification", [
+              //  "level"=>"success",
+               // "message"=>"Berhasil menyimpan data peminjaman"
+                //]);
+
+                $requestFailed=array();
+                $requestSuccess=array();
+                for($id = 0; $id < count($request->id_barang); $id++){
+                    $barangs = Barang::findOrFail($request->id_barang[$id]);
+                    if ($barangs->stok < $request->jumlah[$id]) {
+                        $requestFailed[]=" Maaf, ".$barangs->nama." Yang Akan Di Pinjam Hanya Tersisa ".$barangs->stok;
+                    }else{
+                        $peminjamans = new Peminjaman;
+                        $peminjamans->id_anggota = $request->id_anggota[$id];
+                        $peminjamans->id_barang = $request->id_barang[$id];
+                        $peminjamans->jumlah = $request->jumlah[$id];
+                        $peminjamans->tanggal_batas = $request->tanggal_batas[$id];
+                        $peminjamans->save();
+                    
+                        $barangs->stok = $barangs->stok - $request->jumlah[$id];   
+                        $barangs->save();
+        
+                        $requestSuccess[]=" Berhasil, Meminjam ".$barangs->nama." Dengan Jumlah ".$request->jumlah[$id];
+                    }        
+                }
+                $message= "Rincian Peminjaman :";
+                $message.= "<ul>";
+                for($i=0; $i<count($requestSuccess);$i++){
+                    $message.= '<li> '.$requestSuccess[$i].'</li>'; 
+                }
+                for($i=0; $i<count($requestFailed);$i++){
+                    $message.= '<font color="red"><li>'.$requestFailed[$i].'</li></font>'; 
+                }
+                $message.="</ul>";
+                
         return redirect()->route('peminjaman.index');
 
 
@@ -121,22 +154,58 @@ class PeminjamanController extends Controller
     public function update(Request $request, $id)
     {
 
-        $pengembalians = new pengembalian;
-        $pengembalians->id_anggota = $request->id_anggota;
-        $pengembalians->id_barang = $request->id_barang;
-        $pengembalians->jumlah = $request->jumlah;
-        $pengembalians->tgl_pinjam = $request->tgl_pinjam;
-        $pengembalians->save();
+       // $pengembalians = new pengembalian;
+       // $pengembalians->id_anggota = $request->id_anggota;
+       // $pengembalians->id_barang = $request->id_barang;
+       // $pengembalians->jumlah = $request->jumlah;
+       // $pengembalians->tgl_pinjam = $request->tgl_pinjam;
+       // $pengembalians->save();
 
-        $peminjamans = peminjaman::findOrFail($id);
-        $barangs = barang::findOrFail($request->id_barang);
-        $barangs->stok = $barangs->stok + $request->jumlah;
+       // $peminjamans = peminjaman::findOrFail($id);
+       // $barangs = barang::findOrFail($request->id_barang);
+       // $barangs->stok = $barangs->stok + $request->jumlah;
 
-        $barangs->save();
-        $peminjamans->delete();
-        $pengembalians->save();
+       // $barangs->save();
+       // $peminjamans->delete();
+       // $pengembalians->save();
 
-        return redirect()->route('pengembalian.index');
+       $pengembalians = new Pengembalian;
+       $pengembalians->id_anggota = $request->id_anggota;
+       $pengembalians->id_barang = $request->id_barang;
+       $pengembalians->jumlah = $request->jumlah;
+       $pengembalians->tgl_pinjam = $request->tgl_pinjam;
+       $pengembalians->tanggal_batas = $request->tanggal_batas;
+       $pengembalians->tanggal_kembali = $request->tanggal_kembali;
+
+       $batasdate = $request->tanggal_batas;
+       $kembalidate = $request->tanggal_kembali;
+       $datetime1 = new DateTime($batasdate);
+       $datetime2 = new DateTime($kembalidate);
+       $interval = $datetime1->diff($datetime2);
+       $days = $interval->format('%r%a');
+
+       if ($days > 0) {
+           $denda = $days * 2000;
+
+           // return "Batas Waktu Peminjaman : ".$batasdate.
+           // "<br> Tanggal Pengembalian : ".$kembalidate.
+           // "<br> Selisih Hari : ".$days. " Hari <br> Denda : Rp. ".$denda;
+       } else {
+           $denda = 0;
+           // return "Batas Waktu Peminjaman : ".$batasdate.
+           // "<br> Tanggal Pengembalian : ".$kembalidate. 
+           // "Selisih Hari : ".$days. " Hari<br>Denda : 0";
+       }
+
+       $pengembalians->denda = $denda;
+       $peminjamans = Peminjaman::findOrFail($id);
+       $barangs = Barang::findOrFail($request->id_barang);
+       $barangs->stok = $barangs->stok + $request->jumlah;
+
+       $barangs->save();
+       $peminjamans->delete();
+       $pengembalians->save();
+    return redirect()->route('pengembalian.index');
     }
 
     /**

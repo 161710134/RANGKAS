@@ -24,20 +24,20 @@
 <style type="text/css"></style>
 @endpush
 @section('title')
-Dokumentasi Anggota
+Dokumentasi Peminjaman
 @endsection
 @section('content')
 <div class="row">
   <div class="col-12">
     <div class="card">
       <h2 class="card-header">
-        Laporan Anggota
+        Laporan Peminjaman
         <div class="float-right">
           <a class="btn btn-xs btn-outline-dark badge-pill" href="{{URL::previous()}}"><i class="zmdi zmdi-close-circle"></i> Batal</a>
         </div>
       </h2>
       <div class="card-body">
-        <form action="{{ url('admin/laporan/anggota/detail1') }}" method="post">
+        <form action="{{ url('admin/laporan/peminjaman/detail1') }}" method="post">
           {{csrf_field()}}
           <div class="form-group">
             <label class="control-label"><font style="color:grey"> Dari Tanggal </label> 
@@ -48,7 +48,7 @@ Dokumentasi Anggota
           </div>
         </form>
         <center>
-          <h1>Data Anggota</h1>
+          <h1>Data Peminjaman</h1>
           <br>
           <h4>Dari Tanggal {{$dari}} Sampai Tanggal {{$sampai}}</h4>
         </center>
@@ -56,31 +56,29 @@ Dokumentasi Anggota
           <thead class="thead-default" style="background-color:#2196F3">
             <tr>
               <th><font face color="white">No</th>
-              <th><font face color="white">Nama Anggota</th>
-              <th><font face color="white">Jenis Kelamin</th>
-              <th><font face color="white">No HP</th>
-              <th><font face color="white">Alamat</th>
-              <th><font face color="white">Menjadi Anggota Sejak</th>
-              <th><font face color="white">Anggota Di Ubah Pada</th>
+              <th><font face color="white">Nama Peminjam</th>
+              <th><font face color="white">Barang Yang Dipinjam</th>
+              <th><font face color="white">Jumlah Barang Yang Dipinjam</th>
+              <th><font face color="white">Tanggal Peminjaman</th>
+              <th><font face color="white">Tanggal Batas Peminjaman</th>
             </tr>
           </thead>
           <tbody>
             <?php $nomor = 1; ?>
             @php $no = 1; @endphp
-            @foreach($anggota as $data)
+            @foreach($peminjaman as $data)
             <tr>
               <td>{{ $no++ }}</td>
-              <td>{{ $data->nama }}</td>
-              <td>{{ $data->jk }}</td>
-              <td>{{ $data->nope }}</td>
-              <td>{{ $data->alamat }}</td>
+              <td>{{ $data->anggota->nama }}</td>
+              <td>{{ $data->barang->nama }}</td>
+              <td>{{ $data->jumlah }}</td>
               <td>{{ $data->created_at }}</td>
-              <td>{{ $data->updated_at }}</td>
+              <td>{{ $data->tanggal_batas }}</td>
             </tr>
             @endforeach 
           </tbody>
         </table>
-        Laporan Anggota Di Ambil Dari Tanggal : {{$dari}} Sampai Tanggal : {{$sampai}}
+        Laporan Peminjaman Di Ambil Dari Tanggal : {{$dari}} Sampai Tanggal : {{$sampai}}
       </div>
     </div>
   </div>
